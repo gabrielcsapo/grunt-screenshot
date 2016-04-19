@@ -1,6 +1,6 @@
 {
   "name": "grunt-screenshot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a screenshot utility for grunt",
   "main": "Gruntfile.js",
   "directories": {
