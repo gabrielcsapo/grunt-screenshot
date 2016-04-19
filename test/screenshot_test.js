@@ -2,15 +2,6 @@
 
 var grunt = require('grunt');
 
-var chai = require('chai');
-var chaiFiles = require('chai-files');
-
-chai.use(chaiFiles);
-
-var expect = chai.expect;
-var file = chaiFiles.file;
-var dir = chaiFiles.dir;
-
 exports.autoshot = {
     default_options: function(test) {
         test.expect(3);

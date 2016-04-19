@@ -1,8 +1,8 @@
 /*
- * grunt-autoshot
- * https://github.com//grunt-autoshot
+ * grunt-screenshot
+ * https://github.com/gabrielcsapo/grunt-screenshot
  *
- * Copyright (c) 2013 Ferrari Lee
+ * Copyright (c) 2015 Gabriel Csapo
  * Licensed under the MIT license.
  */
 
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    autoshot: {
+    screenshot: {
       default_options: {
         options: {
           path: './test/screenshot',
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.registerTask('test', ['clean', 'autoshot', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'screenshot', 'nodeunit']);
   grunt.registerTask('default', ['jshint', 'test']);
 
 };

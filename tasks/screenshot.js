@@ -1,8 +1,8 @@
 /*
- * grunt-autoshot
- * https://github.com//grunt-autoshot
+ * grunt-screenshot
+ * https://github.com/gabrielcsapo/grunt-screenshot
  *
- * Copyright (c) 2013 Ferrari Lee
+ * Copyright (c) 2015 Gabriel Csapo
  * Licensed under the MIT license.
  */
 
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
   var async = require('async');
 
   process.setMaxListeners(0);
-  grunt.registerMultiTask('autoshot', 'Create a quick screenshot for your site which could help for document or testing.', function() {
+  grunt.registerMultiTask('screenshot', 'Create a quick screenshot for your site which could help for document or testing.', function() {
     var done = this.async();
     var options = this.options({
       path: __dirname + '/screenshot',
