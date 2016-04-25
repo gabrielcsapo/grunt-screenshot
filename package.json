@@ -26,7 +26,7 @@
     "type": "git",
     "url": "git+https://github.com/gabrielcsapo/grunt-screenshot.git"
   },
-  "author": "",
+  "author": "Gabriel Csapo <gabecsapo@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gabrielcsapo/grunt-screenshot/issues"
