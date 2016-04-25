@@ -69,7 +69,7 @@ Path to the directory which screenshots will be saved.
 Type: `Array`
 
 
-```
+```javascript
 files: [
     // remote
     {
@@ -95,7 +95,7 @@ Type: `Array`
 
 Autoshot could create the screenshot base on given viewport, it's helpful if you want to test responsive webpage.
 
-```
+```javascript
 ex: ['1024x768', '1920x1080']
 ```
 
