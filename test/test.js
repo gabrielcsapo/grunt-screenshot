@@ -9,6 +9,7 @@ describe('screenshot', function() {
             }
             assert.isOk(isEqual, 'images are equal');
             assert.isAtLeast(equality, 0, 'equality is 100%');
+            console.log(equality); // eslint-disable-line no-console
             console.log(raw); // eslint-disable-line no-console
             done();
         })
@@ -21,6 +22,7 @@ describe('screenshot', function() {
             }
             assert.isOk(isEqual, 'images are equal');
             assert.isAtLeast(equality, 0, 'equality is 100%');
+            console.log(equality); // eslint-disable-line no-console
             console.log(raw); // eslint-disable-line no-console
             done();
         });

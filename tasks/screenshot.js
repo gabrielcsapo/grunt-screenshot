@@ -19,20 +19,7 @@ module.exports = function(grunt) {
         var done = this.async();
         var options = this.options({
             path: __dirname + '/screenshot',
-            remote: {
-                files: [{
-                    src: "http://www.google.com",
-                    dest: "google.jpg"
-                }]
-            },
-            local: {
-                path: "./dist",
-                port: 8080,
-                files: [{
-                    src: "index.html",
-                    dest: "screenshot.jpg"
-                }]
-            },
+            files: [],
             viewport: ['1920x1080']
         });
 
@@ -125,18 +112,18 @@ module.exports = function(grunt) {
                 });
             } else if (file.type == 'local') {
                 var mount = st({
-                    path: options.local.path,
+                    path: file.path,
                     index: file.src
                 });
                 var server = http.createServer(function(req, res) {
                     mount(req, res);
-                }).listen(options.local.port, function() {
+                }).listen(file.port, function() {
                     async.eachSeries(options.viewport, function(view, cb) {
                         screenshot({
                             path: options.path,
                             type: 'local',
                             viewport: view,
-                            src: 'http://localhost:' + options.local.port + '/' + file.src,
+                            src: 'http://localhost:' + file.port + '/' + file.src,
                             dest: file.dest,
                             delay: file.delay
                         }, function() {
