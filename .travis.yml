@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - "4"
 before_script:
-  - pecl install imagick
-  - pecl  install graphicsmagick
+  - sudo apt-get install imagemagick
+  - sudo apt-get install graphicsmagick
