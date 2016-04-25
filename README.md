@@ -31,26 +31,29 @@ grunt.initConfig({
       options: {
         // necessary config
         path: SCREENSHOT_DIRECTORY_PATH,
-        // optional config, must set either remote or local
-        remote: {
-            files: [{
+        files: [
+            // remote config options
+            {
+                type: 'remote',
                 src: REMOTE_SITE_URL,
-                dest: FILENAME(INCLUDE FILE TYPE), delay: DELAY_MILLISECOND
-            }]
-        },
-        local: {
-            path: LOCAL_FILE_PATH,
-            port: LOCAL_SERVER_PORT,
-            files: [{
+                dest: FILENAME(INCLUDE FILE TYPE),
+                delay: DELAY_MILLISECOND
+            },
+            // local config options
+            {
+                type: 'local',
+                path: LOCAL_FILE_PATH,
+                port: LOCAL_SERVER_PORT,
                 src: LOCAL_FILENAME,
-                dest: FILENAME(INCLUDE FILE TYPE), delay: DELAY_MILLISECOND
-            }]
-        },
-        viewport: []
+                dest: FILENAME(INCLUDE FILE TYPE),
+                delay: DELAY_MILLISECOND
+            }
+        ]
+        viewport: ['1920x1080','1024x768','640x960'] // any (X)x(Y) size
       },
-    },
-  },
-})
+    }
+  }
+});
 ```
 
 # Options
@@ -61,38 +64,29 @@ Type: `String`
 
 Path to the directory which screenshots will be saved.
 
-### options.remote
+### options.files
 
 Type: `Array`
 
 
-
 ```
-remote: {
-  files: [
+files: [
+    // remote
     {
-        src: "http://www.google.com", dest: "google.png", delay: 3000
+        type: 'remote',
+        src: "http://www.google.com",
+        dest: "google.png",
+        delay: 3000
+    },
+    {
+        type: 'local',
+        path: './dist', // path to directory of the webpage
+        port: 8080      // port of startup http server
+        src: "index.html",
+        dest: "screenshot.jpg",
+        delay: 3000
     }
-  ]
-}
-```
-
-### options.local
-
-Type: `String`
-
-Start a local http server to host your webpage then get the screenshot.
-
-Just like options.remote, you need to assign your local filename and screenshot filename, including it's format.
-
-```
-local: {
-  path: './dist', // path to directory of the webpage
-  port: 8080      // port of startup http server
-  files: [        // local filename and screenshot filename
-    { src: "index.html", dest: "screenshot.jpg", delay: 3000 }
-  ]
-}
+]
 ```
 
 ### options.viewport

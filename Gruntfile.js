@@ -41,21 +41,18 @@ module.exports = function(grunt) {
             default_options: {
                 options: {
                     path: './test/screenshot',
-                    remote: {
-                        files: [{
-                            src: "http://localhost:8000",
-                            dest: "ajax.jpg",
-                            delay: "3000"
-                        }]
-                    },
-                    local: {
+                    files: [{
+                        type: 'remote',
+                        src: "http://localhost:8000",
+                        dest: "ajax.jpg",
+                        delay: "3000"
+                    }, {
+                        type: 'local',
                         path: './test/src',
                         port: 7788,
-                        files: [{
-                            src: "index.html",
-                            dest: "screenshot.jpg"
-                        }]
-                    },
+                        src: "index.html",
+                        dest: "screenshot.jpg"
+                    }],
                     viewport: [
                         '1920x1080',
                         '1024x768',
