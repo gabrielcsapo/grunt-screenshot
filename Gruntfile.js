@@ -14,28 +14,28 @@ module.exports = function(grunt) {
             all: [
                 'Gruntfile.js',
                 'tasks/*.js',
-                '<%= nodeunit.tests %>',
+                '<%= nodeunit.tests %>'
             ],
             options: {
-                jshintrc: '.jshintrc',
-            },
+                jshintrc: '.jshintrc'
+            }
         },
         connect: {
             server: {
                 options: {
                     port: 8000,
                     base: {
-                      path: 'test/src/',
-                      options: {
-                        index: 'ajax.html',
-                        maxAge: 300000
-                      }
+                        path: 'test/src/',
+                        options: {
+                            index: 'ajax.html',
+                            maxAge: 300000
+                        }
                     }
                 }
             }
         },
         clean: {
-            tests: ['test/screenshot'],
+            tests: ['test/screenshot']
         },
         screenshot: {
             default_options: {
@@ -61,13 +61,13 @@ module.exports = function(grunt) {
                         '1024x768',
                         '640x960'
                     ]
-                },
-            },
+                }
+            }
         },
         mochaTest: {
-          test: {
-            src: ['test/test.js']
-          }
+            test: {
+                src: ['test/test.js']
+            }
         }
     });
 

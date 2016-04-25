@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       var delay = opts.delay;
 
       phantom.create({
-        path: require('phantomjs').path
+        path: require('phantomjs-prebuilt').path
     }, function(err, ph) {
         if (err) {
           grunt.fail.warn(err.message);
@@ -61,7 +61,11 @@ module.exports = function(grunt) {
             }
           }
           page.set('zoomFactor', 1);
-          return page.open(src, function(err, status) {
+          return page.open(src, function(err) {
+            if (err) {
+                grunt.fail.warn(err.message);
+                return;
+            }
             var target = type + '-' + viewport + '-' + dest;
 
             // Background problem under self-host server
