@@ -54,10 +54,6 @@ module.exports = function(grunt) {
                         files: [{
                             src: "index.html",
                             dest: "screenshot.jpg"
-                        }, {
-                            src: "ajax.html",
-                            dest: "ajax.jpg",
-                            delay: "5000"
                         }]
                     },
                     viewport: [
@@ -68,8 +64,10 @@ module.exports = function(grunt) {
                 },
             },
         },
-        nodeunit: {
-            tests: ['test/*_test.js'],
+        mochaTest: {
+          test: {
+            src: ['test/test.js']
+          }
         }
     });
 
@@ -77,8 +75,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
-    grunt.registerTask('test', ['clean', 'connect', 'screenshot', 'nodeunit']);
+    grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.registerTask('test', ['clean', 'connect', 'screenshot', 'mochaTest']);
     grunt.registerTask('default', ['jshint', 'test']);
 
 };
