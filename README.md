@@ -16,7 +16,7 @@ npm install grunt-screenshot --save-dev
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
-```
+```javascript
 grunt.loadNpmTasks('grunt-screenshot');
 ```
 
