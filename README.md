@@ -4,6 +4,8 @@
 
 > forked from https://github.com/Ferrari/grunt-autoshot
 
+> a grunt plugin to take remote and local screenshots
+
 # Getting Started
 
 This plugin requires Grunt.
