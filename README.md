@@ -50,9 +50,9 @@ grunt.initConfig({
                 dest: FILENAME(INCLUDE FILE TYPE),
                 delay: DELAY_MILLISECOND
             }
-        ]
+        ],
         viewport: ['1920x1080','1024x768','640x960'] // any (X)x(Y) size
-      },
+      }
     }
   }
 });
