@@ -51,7 +51,7 @@ grunt.initConfig({
                 delay: DELAY_MILLISECOND
             }
         ],
-        viewport: ['1920x1080','1024x768','640x960'] // any (X)x(Y) size
+        viewport: ['1920x1080','1024x768','640x960', '320x480'] // any (X)x(Y) size
       }
     }
   }
@@ -98,7 +98,7 @@ Type: `Array`
 Autoshot could create the screenshot base on given viewport, it's helpful if you want to test responsive webpage.
 
 ```javascript
-ex: ['1024x768', '1920x1080']
+viewport: ['1920x1080','1024x768','640x960', '320x480']
 ```
 
 You could add any resolution you want, just follow the same format.
