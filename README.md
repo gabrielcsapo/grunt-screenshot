@@ -39,7 +39,11 @@ grunt.initConfig({
                 type: 'remote',
                 src: REMOTE_SITE_URL,
                 dest: FILENAME(INCLUDE FILE TYPE),
-                delay: DELAY_MILLISECOND
+                delay: DELAY_MILLISECOND,
+                basicAuth: {
+                    username: STRING (OPTIONAL),
+                    password: STRING (OPTIONAL)
+                }
             },
             // local config options
             {

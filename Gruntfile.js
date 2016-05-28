@@ -8,21 +8,32 @@
 
 'use strict';
 
+var basicAuth = require('basic-auth-connect');
+
 module.exports = function(grunt) {
     grunt.initConfig({
-        jshint: {
-            all: [
-                'Gruntfile.js',
-                'tasks/*.js',
-                '<%= nodeunit.tests %>'
-            ],
+        eslint: {
             options: {
-                jshintrc: '.jshintrc'
-            }
+                rulePaths: ['.']
+            },
+            src: ['*.js', 'tasks/*.js', 'test/*.js', '!node_modules']
         },
         connect: {
             server: {
                 options: {
+                    middleware: function(connect, options, middlewares) {
+                        middlewares.unshift(function(req, res, next) {
+                            if (req.url == '/authenticated') {
+                                basicAuth('username', 'password')(req, res, function() {
+                                    res.end(grunt.file.read('test/src/authenticated.html'));
+                                });
+                            } else {
+                                next();
+                            }
+                        });
+
+                        return middlewares;
+                    },
                     port: 8000,
                     base: {
                         path: 'test/src/',
@@ -43,15 +54,33 @@ module.exports = function(grunt) {
                     path: './test/screenshot',
                     files: [{
                         type: 'remote',
-                        src: "http://localhost:8000",
-                        dest: "ajax.jpg",
-                        delay: "3000"
+                        src: 'http://localhost:8000',
+                        dest: 'ajax.jpg',
+                        delay: '2000'
+                    }, {
+                        type: 'remote',
+                        src: 'http://localhost:8000/authenticated',
+                        dest: 'authenticated.jpg',
+                        delay: '2000',
+                        basicAuth: {
+                            username: 'username',
+                            password: 'password'
+                        }
+                    }, {
+                        type: 'remote',
+                        src: 'http://localhost:8000/authenticated',
+                        dest: 'wrongAuthentication.jpg',
+                        delay: '2000',
+                        basicAuth: {
+                            username: 'wrong',
+                            password: 'wrong'
+                        }
                     }, {
                         type: 'local',
                         path: './test/src',
                         port: 7788,
-                        src: "index.html",
-                        dest: "screenshot.jpg"
+                        src: 'index.html',
+                        dest: 'screenshot.jpg'
                     }],
                     viewport: [
                         '1920x1080',
@@ -70,10 +99,10 @@ module.exports = function(grunt) {
 
     grunt.loadTasks('tasks');
     grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('gruntify-eslint');
     grunt.registerTask('test', ['clean', 'connect', 'screenshot', 'mochaTest']);
-    grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask('default', ['eslint', 'test']);
 
 };
