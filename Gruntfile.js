@@ -8,6 +8,8 @@
 
 'use strict';
 
+var basicAuth = require('basic-auth-connect');
+
 module.exports = function(grunt) {
     grunt.initConfig({
         jshint: {
@@ -23,6 +25,19 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
+                    middleware: function(connect, options, middlewares) {
+                      middlewares.unshift(function(req, res, next) {
+                        if (req.url == '/authenticated') {
+                            basicAuth('username', 'password')(req, res, function() {
+                                res.end(grunt.file.read('test/src/authenticated.html'));
+                            });
+                        } else {
+                            next();
+                        }
+                      });
+
+                      return middlewares;
+                    },
                     port: 8000,
                     base: {
                         path: 'test/src/',
@@ -45,7 +60,25 @@ module.exports = function(grunt) {
                         type: 'remote',
                         src: "http://localhost:8000",
                         dest: "ajax.jpg",
-                        delay: "3000"
+                        delay: "2000"
+                    }, {
+                        type: 'remote',
+                        src: "http://localhost:8000/authenticated",
+                        dest: "authenticated.jpg",
+                        delay: "2000",
+                        basicAuth: {
+                            username: 'username',
+                            password: 'password'
+                        }
+                    }, {
+                        type: 'remote',
+                        src: "http://localhost:8000/authenticated",
+                        dest: "wrongAuthentication.jpg",
+                        delay: "2000",
+                        basicAuth: {
+                            username: 'wrong',
+                            password: 'wrong'
+                        }
                     }, {
                         type: 'local',
                         path: './test/src',

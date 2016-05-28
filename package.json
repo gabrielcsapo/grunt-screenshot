@@ -1,12 +1,13 @@
 {
   "name": "grunt-screenshot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "a screenshot utility for grunt",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "./node_modules/eslint/bin/eslint.js .;grunt test;"
   },
   "devDependencies": {
+    "basic-auth-connect": "^1.0.0",
     "chai": "^3.5.0",
     "gm": "^1.22.0",
     "grunt-contrib-clean": "^1.0.0",
