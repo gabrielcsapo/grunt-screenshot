@@ -4,7 +4,7 @@
   "description": "a screenshot utility for grunt",
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "./node_modules/eslint/bin/eslint.js .;grunt test;"
+    "test": "grunt test;"
   },
   "devDependencies": {
     "basic-auth-connect": "^1.0.0",
@@ -12,10 +12,10 @@
     "gm": "^1.22.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-connect": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.4.5"
+    "gruntify-eslint": "^2.0.0",
+    "mocha": "^2.5.3"
   },
   "dependencies": {
     "async": "^1.5.2",
