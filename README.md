@@ -1,6 +1,8 @@
 # grunt-screenshot
 [![Build Status](https://travis-ci.org/gabrielcsapo/grunt-screenshot.svg?branch=master)](https://travis-ci.org/gabrielcsapo/grunt-screenshot) [![Dependency Status](https://david-dm.org/gabrielcsapo/grunt-screenshot.svg)](https://david-dm.org/gabrielcsapo/grunt-screenshot)
 [![devDependency Status](https://david-dm.org/gabrielcsapo/grunt-screenshot/dev-status.svg)](https://david-dm.org/gabrielcsapo/grunt-screenshot#info=devDependencies)
+[![npm](https://img.shields.io/npm/dt/grunt-screenshot.svg?maxAge=2592000)]()
+[![npm](https://img.shields.io/npm/dm/grunt-screenshot.svg?maxAge=2592000)]()
 
 > forked from https://github.com/Ferrari/grunt-autoshot
 
