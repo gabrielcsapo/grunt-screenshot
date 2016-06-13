@@ -56,7 +56,8 @@ module.exports = function(grunt) {
                         type: 'remote',
                         src: 'http://localhost:8000',
                         dest: 'ajax.png',
-                        delay: '2000'
+                        delay: '2000',
+                        parallel: true
                     }, {
                         type: 'remote',
                         src: 'http://localhost:8000',
@@ -87,6 +88,13 @@ module.exports = function(grunt) {
                         port: 7788,
                         src: 'index.html',
                         dest: 'screenshot.png'
+                    }, {
+                        type: 'local',
+                        path: './test/src',
+                        port: 7788,
+                        src: 'index.html',
+                        dest: 'screenshot.png',
+                        parallel: true
                     }],
                     viewport: [
                         '1920x1080',
