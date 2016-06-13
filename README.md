@@ -38,6 +38,8 @@ grunt.initConfig({
         files: [
             // remote config options
             {
+                parallel: BOOLEAN (OPTIONAL),
+                compress : BOOLEAN (OPTIONAL),
                 type: 'remote',
                 src: REMOTE_SITE_URL,
                 dest: FILENAME(INCLUDE FILE TYPE),
@@ -49,6 +51,8 @@ grunt.initConfig({
             },
             // local config options
             {
+                parallel: BOOLEAN (OPTIONAL),
+                compress : BOOLEAN (OPTIONAL),
                 type: 'local',
                 path: LOCAL_FILE_PATH,
                 port: LOCAL_SERVER_PORT,

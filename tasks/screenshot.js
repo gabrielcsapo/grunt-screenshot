@@ -73,9 +73,9 @@ module.exports = function(grunt) {
                                 setTimeout(function() {
                                     page.render(path + '/' + target, function() {
                                         grunt.log.writeln('Delay ' + delay + ' to take a screenshot to ' + target);
-                                        if(compress) {
+                                        if (compress) {
                                             var buf = fs.readFileSync(path + '/' + target);
-                                        	imageminPngquant()(buf).then(function(data) {
+                                            imageminPngquant()(buf).then(function(data) {
                                                 fs.writeFile(path + '/' + target, data, function() {
                                                     ph.exit();
                                                     cb();
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
                             } else {
                                 page.render(path + '/' + target, function() {
                                     grunt.log.writeln('Take a screenshot to ' + target);
-                                    if(compress) {
+                                    if (compress) {
                                         var buf = fs.readFileSync(path + '/' + target);
                                         imageminPngquant()(buf).then(function(data) {
                                             fs.writeFile(path + '/' + target, data, function() {
@@ -134,23 +134,48 @@ module.exports = function(grunt) {
 
         async.eachSeries(options.files, function(file, outerCb) {
             filesLeft -= 1;
+            var parallel = file.parallel;
+
             if (file.type == 'remote') {
-                async.eachSeries(options.viewport, function(view, cb) {
-                    screenshot({
-                        path: options.path,
-                        type: "remote",
-                        viewport: view,
-                        src: file.src,
-                        dest: file.dest,
-                        delay: file.delay,
-                        compress: file.compress || false,
-                        basicAuth: file.basicAuth
-                    }, function() {
-                        cb();
+                if (parallel) {
+                    var tasks = [];
+                    options.viewport.forEach(function(view) {
+                        tasks.push(function(cb) {
+                            screenshot({
+                                path: options.path,
+                                type: "remote",
+                                viewport: view,
+                                src: file.src,
+                                dest: file.dest,
+                                delay: file.delay,
+                                compress: file.compress || false,
+                                basicAuth: file.basicAuth
+                            }, function() {
+                                cb();
+                            });
+                        });
                     });
-                }, function() {
-                    outerCb();
-                });
+                    async.parallel(tasks, function() {
+                        outerCb();
+                    });
+                } else {
+                    async.eachSeries(options.viewport, function(view, cb) {
+                        screenshot({
+                            path: options.path,
+                            type: "remote",
+                            viewport: view,
+                            src: file.src,
+                            dest: file.dest,
+                            delay: file.delay,
+                            compress: file.compress || false,
+                            basicAuth: file.basicAuth
+                        }, function() {
+                            cb();
+                        });
+                    }, function() {
+                        outerCb();
+                    });
+                }
             } else if (file.type == 'local') {
                 var mount = st({
                     path: file.path,
@@ -159,22 +184,44 @@ module.exports = function(grunt) {
                 var server = http.createServer(function(req, res) {
                     mount(req, res);
                 }).listen(file.port, function() {
-                    async.eachSeries(options.viewport, function(view, cb) {
-                        screenshot({
-                            path: options.path,
-                            type: 'local',
-                            viewport: view,
-                            src: 'http://localhost:' + file.port + '/' + file.src,
-                            dest: file.dest,
-                            delay: file.delay,
-                            compress: file.compress || false
-                        }, function() {
-                            cb();
+                    if (parallel) {
+                        var tasks = [];
+                        options.viewport.forEach(function(view) {
+                            tasks.push(function(cb) {
+                                screenshot({
+                                    path: options.path,
+                                    type: 'local',
+                                    viewport: view,
+                                    src: 'http://localhost:' + file.port + '/' + file.src,
+                                    dest: file.dest,
+                                    delay: file.delay,
+                                    compress: file.compress || false
+                                }, function() {
+                                    cb();
+                                });
+                            });
                         });
-                    }, function() {
-                        server.close();
-                        outerCb();
-                    });
+                        async.parallel(tasks, function() {
+                            outerCb();
+                        });
+                    } else {
+                        async.eachSeries(options.viewport, function(view, cb) {
+                            screenshot({
+                                path: options.path,
+                                type: 'local',
+                                viewport: view,
+                                src: 'http://localhost:' + file.port + '/' + file.src,
+                                dest: file.dest,
+                                delay: file.delay,
+                                compress: file.compress || false
+                            }, function() {
+                                cb();
+                            });
+                        }, function() {
+                            server.close();
+                            outerCb();
+                        });
+                    }
                 });
             } else {
                 outerCb();
