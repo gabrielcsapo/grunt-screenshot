@@ -55,12 +55,18 @@ module.exports = function(grunt) {
                     files: [{
                         type: 'remote',
                         src: 'http://localhost:8000',
-                        dest: 'ajax.jpg',
+                        dest: 'ajax.png',
                         delay: '2000'
                     }, {
                         type: 'remote',
+                        src: 'http://localhost:8000',
+                        dest: 'compressed.png',
+                        delay: '2000',
+                        compress: true
+                    }, {
+                        type: 'remote',
                         src: 'http://localhost:8000/authenticated',
-                        dest: 'authenticated.jpg',
+                        dest: 'authenticated.png',
                         delay: '2000',
                         basicAuth: {
                             username: 'username',
@@ -69,7 +75,7 @@ module.exports = function(grunt) {
                     }, {
                         type: 'remote',
                         src: 'http://localhost:8000/authenticated',
-                        dest: 'wrongAuthentication.jpg',
+                        dest: 'wrongAuthentication.png',
                         delay: '2000',
                         basicAuth: {
                             username: 'wrong',
@@ -80,7 +86,7 @@ module.exports = function(grunt) {
                         path: './test/src',
                         port: 7788,
                         src: 'index.html',
-                        dest: 'screenshot.jpg'
+                        dest: 'screenshot.png'
                     }],
                     viewport: [
                         '1920x1080',
