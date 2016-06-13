@@ -10,9 +10,11 @@
 
 module.exports = function(grunt) {
     var phantom = require('node-phantom-simple');
+    var fs = require('fs');
     var st = require('st');
     var http = require('http');
     var async = require('async');
+    var imageminPngquant = require('imagemin-pngquant');
 
     process.setMaxListeners(0);
     grunt.registerMultiTask('screenshot', 'Create a quick screenshot for your site which could help for document or testing.', function() {
@@ -30,6 +32,7 @@ module.exports = function(grunt) {
             var src = opts.src;
             var dest = opts.dest;
             var delay = opts.delay;
+            var compress = opts.compress;
 
             phantom.create({
                 path: require('phantomjs-prebuilt').path
@@ -70,15 +73,35 @@ module.exports = function(grunt) {
                                 setTimeout(function() {
                                     page.render(path + '/' + target, function() {
                                         grunt.log.writeln('Delay ' + delay + ' to take a screenshot to ' + target);
-                                        ph.exit();
-                                        cb();
+                                        if(compress) {
+                                            var buf = fs.readFileSync(path + '/' + target);
+                                        	imageminPngquant()(buf).then(function(data) {
+                                                fs.writeFile(path + '/' + target, data, function() {
+                                                    ph.exit();
+                                                    cb();
+                                                });
+                                            });
+                                        } else {
+                                            ph.exit();
+                                            cb();
+                                        }
                                     });
                                 }, delay);
                             } else {
                                 page.render(path + '/' + target, function() {
                                     grunt.log.writeln('Take a screenshot to ' + target);
-                                    ph.exit();
-                                    cb();
+                                    if(compress) {
+                                        var buf = fs.readFileSync(path + '/' + target);
+                                        imageminPngquant()(buf).then(function(data) {
+                                            fs.writeFile(path + '/' + target, data, function() {
+                                                ph.exit();
+                                                cb();
+                                            });
+                                        });
+                                    } else {
+                                        ph.exit();
+                                        cb();
+                                    }
                                 });
                             }
                         });
@@ -120,6 +143,7 @@ module.exports = function(grunt) {
                         src: file.src,
                         dest: file.dest,
                         delay: file.delay,
+                        compress: file.compress || false,
                         basicAuth: file.basicAuth
                     }, function() {
                         cb();
@@ -142,7 +166,8 @@ module.exports = function(grunt) {
                             viewport: view,
                             src: 'http://localhost:' + file.port + '/' + file.src,
                             dest: file.dest,
-                            delay: file.delay
+                            delay: file.delay,
+                            compress: file.compress || false
                         }, function() {
                             cb();
                         });
