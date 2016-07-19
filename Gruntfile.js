@@ -49,38 +49,7 @@ module.exports = function(grunt) {
             tests: ['test/screenshot']
         },
         screenshot: {
-            video: {
-                options: {
-                    path: './test/screenshot',
-                    files: [{
-                        type: 'remote',
-                        video: {
-                            time: '1000'
-                        },
-                        src: 'http://localhost:8000/moving',
-                        dest: 'moving.gif',
-                        delay: '100',
-                        parallel: true
-                    }, {
-                        type: 'local',
-                        video: {
-                            time: '1000'
-                        },
-                        port: 7788,
-                        path: './test/src',
-                        src: 'moving.html',
-                        dest: 'moving.gif',
-                        delay: '100',
-                        parallel: true
-                    }],
-                    viewport: [
-                        '1920x1080',
-                        '1024x768',
-                        '640x960'
-                    ]
-                }
-            },
-            default_options: {
+            defaults: {
                 options: {
                     path: './test/screenshot',
                     files: [{
@@ -116,15 +85,35 @@ module.exports = function(grunt) {
                     }, {
                         type: 'local',
                         path: './test/src',
-                        port: 7788,
+                        port: 7786,
                         src: 'index.html',
                         dest: 'screenshot.png'
                     }, {
                         type: 'local',
                         path: './test/src',
-                        port: 7788,
+                        port: 7787,
                         src: 'index.html',
                         dest: 'screenshot.png',
+                        parallel: true
+                    }, {
+                        type: 'remote',
+                        video: {
+                            time: '1000'
+                        },
+                        src: 'http://localhost:8000/moving',
+                        dest: 'moving.gif',
+                        delay: '100',
+                        parallel: true
+                    }, {
+                        type: 'local',
+                        video: {
+                            time: '1000'
+                        },
+                        port: 7788,
+                        path: './test/src',
+                        src: 'moving.html',
+                        dest: 'moving.gif',
+                        delay: '100',
                         parallel: true
                     }],
                     viewport: [
