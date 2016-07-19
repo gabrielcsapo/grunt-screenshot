@@ -49,6 +49,37 @@ module.exports = function(grunt) {
             tests: ['test/screenshot']
         },
         screenshot: {
+            video: {
+                options: {
+                    path: './test/screenshot',
+                    files: [{
+                        type: 'remote',
+                        video: {
+                            time: '1000'
+                        },
+                        src: 'http://localhost:8000/moving',
+                        dest: 'moving.gif',
+                        delay: '100',
+                        parallel: true
+                    }, {
+                        type: 'local',
+                        video: {
+                            time: '1000'
+                        },
+                        port: 7788,
+                        path: './test/src',
+                        src: 'moving.html',
+                        dest: 'moving.gif',
+                        delay: '100',
+                        parallel: true
+                    }],
+                    viewport: [
+                        '1920x1080',
+                        '1024x768',
+                        '640x960'
+                    ]
+                }
+            },
             default_options: {
                 options: {
                     path: './test/screenshot',
@@ -110,7 +141,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
     grunt.loadTasks('tasks');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -118,5 +148,4 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('gruntify-eslint');
     grunt.registerTask('test', ['clean', 'connect', 'screenshot', 'mochaTest']);
     grunt.registerTask('default', ['eslint', 'test']);
-
 };

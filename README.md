@@ -108,10 +108,37 @@ files: [
 
 Type: `Array`
 
-Autoshot could create the screenshot base on given viewport, it's helpful if you want to test responsive webpage.
+grunt-screenshot could create the screenshot base on given viewport, it's helpful if you want to test responsive webpage.
 
 ```javascript
 viewport: ['1920x1080','1024x768','640x960', '320x480']
 ```
 
 You could add any resolution you want, just follow the same format.
+
+### options.video
+
+Type: `Object`
+
+grunt-screenshot can take multiple images and create a gif out of them.
+
+```javascript
+video: {
+    time: '1000'
+}
+```
+
+An example of creating a gif would be;
+
+```javascript
+{
+    type: 'remote',
+    video: {
+        time: '1000'
+    },
+    src: 'http://localhost:8000/moving',
+    dest: 'moving.gif',
+    delay: '100',
+    parallel: true
+}
+```
