@@ -14,6 +14,8 @@ module.exports = function(grunt) {
     var st = require('st');
     var http = require('http');
     var async = require('async');
+    var rimraf = require('rimraf');
+    var exec = require('child_process').exec;
     var imageminPngquant = require('imagemin-pngquant');
 
     process.setMaxListeners(0);
@@ -33,6 +35,7 @@ module.exports = function(grunt) {
             var dest = opts.dest;
             var delay = opts.delay;
             var compress = opts.compress;
+            var video = opts.video;
 
             phantom.create({
                 path: require('phantomjs-prebuilt').path
@@ -69,10 +72,62 @@ module.exports = function(grunt) {
                                 document.head.insertBefore(style, document.head.firstChild);
                             });
 
-                            if (delay) {
-                                setTimeout(function() {
+                            if (video) {
+                                var now = viewport + '-' + Date.now();
+                                var count = Math.round(video.time / delay);
+                                var operations = [];
+                                for (var i = 0; i < count; i++) {
+                                    operations.push(
+                                        function(callback) {
+                                            setTimeout(function() {
+                                                page.render(path + '/' + now + '/' + Date.now() + '.png', function() {
+                                                    grunt.log.writeln('Delay ' + delay + ' to take a screenshot to ' + now + '/' + Date.now() + '.png');
+                                                    if (compress) {
+                                                        var buf = fs.readFileSync(path + '/' + now + '/' + Date.now() + '.png');
+                                                        imageminPngquant()(buf).then(function(data) {
+                                                            fs.writeFile(path + '/' + now + '/' + Date.now() + '.png', data, function() {
+                                                                callback();
+                                                            });
+                                                        });
+                                                    } else {
+                                                        callback();
+                                                    }
+                                                });
+                                            }, delay * (count--));
+                                        }
+                                    );
+                                }
+                                async.waterfall(operations, function() {
+                                    var src = path + '/' + now + '/*.png';
+                                    var command = 'convert -loop 0 ' + src + ' ' + path + '/' + target;
+                                    exec(command, function() {
+                                        rimraf(path + '/' + now + '/', function() {
+                                            cb();
+                                        });
+                                    });
+                                });
+                            } else {
+                                if (delay) {
+                                    setTimeout(function() {
+                                        page.render(path + '/' + target, function() {
+                                            grunt.log.writeln('Delay ' + delay + ' to take a screenshot to ' + target);
+                                            if (compress) {
+                                                var buf = fs.readFileSync(path + '/' + target);
+                                                imageminPngquant()(buf).then(function(data) {
+                                                    fs.writeFile(path + '/' + target, data, function() {
+                                                        ph.exit();
+                                                        cb();
+                                                    });
+                                                });
+                                            } else {
+                                                ph.exit();
+                                                cb();
+                                            }
+                                        });
+                                    }, delay);
+                                } else {
                                     page.render(path + '/' + target, function() {
-                                        grunt.log.writeln('Delay ' + delay + ' to take a screenshot to ' + target);
+                                        grunt.log.writeln('Take a screenshot to ' + target);
                                         if (compress) {
                                             var buf = fs.readFileSync(path + '/' + target);
                                             imageminPngquant()(buf).then(function(data) {
@@ -86,23 +141,7 @@ module.exports = function(grunt) {
                                             cb();
                                         }
                                     });
-                                }, delay);
-                            } else {
-                                page.render(path + '/' + target, function() {
-                                    grunt.log.writeln('Take a screenshot to ' + target);
-                                    if (compress) {
-                                        var buf = fs.readFileSync(path + '/' + target);
-                                        imageminPngquant()(buf).then(function(data) {
-                                            fs.writeFile(path + '/' + target, data, function() {
-                                                ph.exit();
-                                                cb();
-                                            });
-                                        });
-                                    } else {
-                                        ph.exit();
-                                        cb();
-                                    }
-                                });
+                                }
                             }
                         });
                     }
@@ -148,6 +187,7 @@ module.exports = function(grunt) {
                                 src: file.src,
                                 dest: file.dest,
                                 delay: file.delay,
+                                video: file.video,
                                 compress: file.compress || false,
                                 basicAuth: file.basicAuth
                             }, function() {
@@ -167,6 +207,7 @@ module.exports = function(grunt) {
                             src: file.src,
                             dest: file.dest,
                             delay: file.delay,
+                            video: file.video,
                             compress: file.compress || false,
                             basicAuth: file.basicAuth
                         }, function() {
@@ -195,6 +236,7 @@ module.exports = function(grunt) {
                                     src: 'http://localhost:' + file.port + '/' + file.src,
                                     dest: file.dest,
                                     delay: file.delay,
+                                    video: file.video,
                                     compress: file.compress || false
                                 }, function() {
                                     cb();
@@ -213,6 +255,7 @@ module.exports = function(grunt) {
                                 src: 'http://localhost:' + file.port + '/' + file.src,
                                 dest: file.dest,
                                 delay: file.delay,
+                                video: file.video,
                                 compress: file.compress || false
                             }, function() {
                                 cb();
