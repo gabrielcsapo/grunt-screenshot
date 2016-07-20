@@ -2,7 +2,7 @@
  * grunt-screenshot
  * https://github.com/gabrielcsapo/grunt-screenshot
  *
- * Copyright (c) 2015 Gabriel Csapo
+ * Copyright (c) 2016 Gabriel Csapo
  * Licensed under the MIT license.
  */
 
@@ -36,6 +36,7 @@ module.exports = function(grunt) {
             var delay = opts.delay;
             var compress = opts.compress;
             var video = opts.video;
+            var script = opts.script;
 
             phantom.create({
                 path: require('phantomjs-prebuilt').path
@@ -64,13 +65,17 @@ module.exports = function(grunt) {
                             var target = type + '-' + viewport + '-' + dest;
 
                             // Background problem under self-host server
-                            page.evaluate(function() {
+                            page.evaluate(function(script) {
                                 var style = document.createElement('style');
                                 var text = document.createTextNode('body { background: #fff }');
                                 style.setAttribute('type', 'text/css');
                                 style.appendChild(text);
                                 document.head.insertBefore(style, document.head.firstChild);
-                            });
+                                // Execute script if there is any included
+                                if (script) {
+                                    eval(script);
+                                }
+                            }, script, function() {});
 
                             if (video) {
                                 var now = viewport + '-' + Date.now();
@@ -188,6 +193,7 @@ module.exports = function(grunt) {
                                 dest: file.dest,
                                 delay: file.delay,
                                 video: file.video,
+                                script: file.script,
                                 compress: file.compress || false,
                                 basicAuth: file.basicAuth
                             }, function() {
@@ -208,6 +214,7 @@ module.exports = function(grunt) {
                             dest: file.dest,
                             delay: file.delay,
                             video: file.video,
+                            script: file.script,
                             compress: file.compress || false,
                             basicAuth: file.basicAuth
                         }, function() {
@@ -237,6 +244,7 @@ module.exports = function(grunt) {
                                     dest: file.dest,
                                     delay: file.delay,
                                     video: file.video,
+                                    script: file.script,
                                     compress: file.compress || false
                                 }, function() {
                                     cb();
@@ -256,6 +264,7 @@ module.exports = function(grunt) {
                                 dest: file.dest,
                                 delay: file.delay,
                                 video: file.video,
+                                script: file.script,
                                 compress: file.compress || false
                             }, function() {
                                 cb();

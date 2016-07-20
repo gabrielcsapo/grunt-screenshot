@@ -97,10 +97,17 @@ module.exports = function(grunt) {
                         parallel: true
                     }, {
                         type: 'remote',
+                        src: 'http://localhost:8000',
+                        dest: 'execute-script.png',
+                        delay: '2000',
+                        script: 'document.body.style.backgroundColor = "orange"; document.body.innerHTML = "<h1>Hello World</h1>"',
+                        parallel: true
+                    }, {
+                        type: 'remote',
                         video: {
                             time: '1000'
                         },
-                        src: 'http://localhost:8000/moving',
+                        src: 'http://localhost:8000/moving.html',
                         dest: 'moving.gif',
                         delay: '100',
                         parallel: true
