@@ -52,6 +52,7 @@ module.exports = function(grunt) {
             defaults: {
                 options: {
                     path: './test/screenshot',
+                    maxParallel: 100,
                     files: [{
                         type: 'remote',
                         src: 'http://localhost:8000',

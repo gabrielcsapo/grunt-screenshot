@@ -179,6 +179,7 @@ module.exports = function(grunt) {
         async.eachSeries(options.files, function(file, outerCb) {
             filesLeft -= 1;
             var parallel = file.parallel;
+            var limit = options.maxParallel || 2;
 
             if (file.type == 'remote') {
                 if (parallel) {
@@ -201,7 +202,7 @@ module.exports = function(grunt) {
                             });
                         });
                     });
-                    async.parallel(tasks, function() {
+                    async.parallelLimit(tasks, limit, function() {
                         outerCb();
                     });
                 } else {
@@ -251,7 +252,7 @@ module.exports = function(grunt) {
                                 });
                             });
                         });
-                        async.parallel(tasks, function() {
+                        async.parallelLimit(tasks, limit, function() {
                             outerCb();
                         });
                     } else {
