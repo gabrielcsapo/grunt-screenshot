@@ -158,4 +158,83 @@ describe('screenshot', function() {
             });
         });
     });
+
+    describe('should diff gifs', function() {
+        it('should diff 1920x1080', function(done) {
+            gm.compare('test/screenshot/remote-1920x1080-moving.gif', 'test/expected/remote-1920x1080-moving.gif', function(err, isEqual, equality, raw) {
+                if (err) {
+                    throw err;
+                }
+                assert.isOk(isEqual, 'images are equal');
+                assert.isAtLeast(equality, 0, 'equality is 100%');
+                console.log(equality); // eslint-disable-line no-console
+                console.log(raw); // eslint-disable-line no-console
+                done();
+            });
+        });
+        it('should diff 1024x768', function(done) {
+            gm.compare('test/screenshot/remote-1024x768-moving.gif', 'test/expected/remote-1024x768-moving.gif', function(err, isEqual, equality, raw) {
+                if (err) {
+                    throw err;
+                }
+                assert.isOk(isEqual, 'images are equal');
+                assert.isAtLeast(equality, 0, 'equality is 100%');
+                console.log(equality); // eslint-disable-line no-console
+                console.log(raw); // eslint-disable-line no-console
+                done();
+            });
+        });
+        it('should diff 640x960', function(done) {
+            gm.compare('test/screenshot/remote-640x960-moving.gif', 'test/expected/remote-640x960-moving.gif', function(err, isEqual, equality, raw) {
+                if (err) {
+                    throw err;
+                }
+                assert.isOk(isEqual, 'images are equal');
+                assert.isAtLeast(equality, 0, 'equality is 100%');
+                console.log(equality); // eslint-disable-line no-console
+                console.log(raw); // eslint-disable-line no-console
+                done();
+            });
+        });
+    });
+
+    describe('should diff execute-script', function() {
+        it('should diff 1920x1080', function(done) {
+            gm.compare('test/screenshot/remote-1920x1080-execute-script.png', 'test/expected/remote-1920x1080-execute-script.png', function(err, isEqual, equality, raw) {
+                if (err) {
+                    throw err;
+                }
+                assert.isOk(isEqual, 'images are equal');
+                assert.isAtLeast(equality, 0, 'equality is 100%');
+                console.log(equality); // eslint-disable-line no-console
+                console.log(raw); // eslint-disable-line no-console
+                done();
+            });
+        });
+        it('should diff 1024x768', function(done) {
+            gm.compare('test/screenshot/remote-1024x768-execute-script.png', 'test/expected/remote-1024x768-execute-script.png', function(err, isEqual, equality, raw) {
+                if (err) {
+                    throw err;
+                }
+                assert.isOk(isEqual, 'images are equal');
+                assert.isAtLeast(equality, 0, 'equality is 100%');
+                console.log(equality); // eslint-disable-line no-console
+                console.log(raw); // eslint-disable-line no-console
+                done();
+            });
+        });
+        it('should diff 640x960', function(done) {
+            gm.compare('test/screenshot/remote-640x960-execute-script.png', 'test/expected/remote-640x960-execute-script.png', function(err, isEqual, equality, raw) {
+                if (err) {
+                    throw err;
+                }
+                assert.isOk(isEqual, 'images are equal');
+                assert.isAtLeast(equality, 0, 'equality is 100%');
+                console.log(equality); // eslint-disable-line no-console
+                console.log(raw); // eslint-disable-line no-console
+                done();
+            });
+        });
+    });
+
 });
