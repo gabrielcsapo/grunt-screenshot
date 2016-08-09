@@ -38,6 +38,7 @@ grunt.initConfig({
       options: {
         // necessary config
         path: SCREENSHOT_DIRECTORY_PATH,
+        maxParallel: INT (OPTIONAL) (DEFAULT) 2
         files: [
             // remote config options
             {
