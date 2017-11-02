@@ -1,17 +1,13 @@
 # grunt-screenshot
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/gabrielcsapo/grunt-screenshot.svg)](https://greenkeeper.io/)
+> 📸 a grunt plugin to take remote and local screenshots
 
 [![Npm Version](https://img.shields.io/npm/v/grunt-screenshot.svg)](https://www.npmjs.com/package/grunt-screenshot)
-[![Build Status](https://travis-ci.org/gabrielcsapo/grunt-screenshot.svg?branch=master)](https://travis-ci.org/gabrielcsapo/grunt-screenshot) [![Dependency Status](https://david-dm.org/gabrielcsapo/grunt-screenshot.svg)](https://david-dm.org/gabrielcsapo/grunt-screenshot)
-[![devDependency Status](https://david-dm.org/gabrielcsapo/grunt-screenshot/dev-status.svg)](https://david-dm.org/gabrielcsapo/grunt-screenshot#info=devDependencies)
-![npm license](https://img.shields.io/npm/l/grunt-screenshot.svg)
-[![npm](https://img.shields.io/npm/dt/grunt-screenshot.svg?maxAge=2592000)]()
-[![npm](https://img.shields.io/npm/dm/grunt-screenshot.svg?maxAge=2592000)]()
-
-> forked from https://github.com/Ferrari/grunt-autoshot
-
-> a grunt plugin to take remote and local screenshots
+[![Build Status](https://travis-ci.org/gabrielcsapo/grunt-screenshot.svg?branch=master)](https://travis-ci.org/gabrielcsapo/grunt-screenshot)
+[![Dependency Status](https://starbuck.gabrielcsapo.com/badge/github/gabrielcsapo/grunt-screenshot/status.svg)](https://starbuck.gabrielcsapo.com/github/gabrielcsapo/grunt-screenshot)
+[![devDependency Status](https://starbuck.gabrielcsapo.com/badge/github/gabrielcsapo/grunt-screenshot/dev-status.svg)](https://starbuck.gabrielcsapo.com/github/gabrielcsapo/grunt-screenshot#info=devDependencies)
+[![npm](https://img.shields.io/npm/dt/grunt-screenshot.svg)](https://github.com/gabrielcsapo/grunt-screenshot)
+[![npm](https://img.shields.io/npm/dm/grunt-screenshot.svg)](https://github.com/gabrielcsapo/grunt-screenshot)
 
 # Getting Started
 

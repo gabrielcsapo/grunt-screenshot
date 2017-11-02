@@ -1,7 +1,7 @@
 {
   "name": "grunt-screenshot",
   "version": "0.6.0",
-  "description": "a screenshot utility for grunt",
+  "description": "📸 a grunt plugin to take remote and local screenshots",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "grunt test;"
@@ -10,6 +10,8 @@
     "basic-auth-connect": "^1.0.0",
     "chai": "^4.1.0",
     "gm": "^1.23.0",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-connect": "^1.0.1",
     "grunt-contrib-nodeunit": "^1.0.0",
